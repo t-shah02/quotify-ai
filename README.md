@@ -1,4 +1,8 @@
-# Quotify-AI
+# Quotify-AI - AI Powered Quote Poster for Social Media
+<p align="center">
+  <img width="300" height="300" src="https://raw.githubusercontent.com/t-shah02/quotify-ai/main/docs/quotify_ai_logo.png" />  
+</p>
+
 This is an AI-powered quote generator bot that can post transformative quotes, along with beautiful illustrations on various social media platforms. It was trained on a dataset of around 30k quotes, grouped by various category names. To generate content, it picks 1-3 random categories from that dataset and then uses a vector database (where the quote dataset content was vectorized), to find the closest matches. After finding the matches, it passes those categories and quotes to an LLM API (**OpenAI**), using a basic Langchain prompt template, to generate a new foreign quote with the inspiration of that data. Once the quote has been generated, an additional call is made to the Stability AI API, and uses the popular tx2img model called, **Stable Diffusion**. 
 
 The bot currently only posts on Instagram, but I plan to add more social media platforms in the future.
