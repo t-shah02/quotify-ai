@@ -1,0 +1,59 @@
+name: run main.py for instagram posting
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo content
+        uses: actions/checkout@v3
+
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: installing package list
+        run: apt list --installed
+
+      - name: installing xvfb
+        run: sudo apt-get install xvfb
+
+      - name: removing previous chrome instances on runner
+        run: sudo apt purge google-chrome-stable
+
+      - name: install python packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: execute instagram posting main script
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          STABILITY_API_KEY: ${{ secrets.STABILITY_API_KEY }}
+          STABILITY_HOST: ${{ secrets.STABILITY_HOST }}
+          OPENAI_MODEL_NAME: ${{ secrets.OPENAI_MODEL_NAME }}
+          OPENAI_MODEL_TEMPERATURE: ${{ secrets.OPENAI_MODEL_TEMPERATURE }}
+          RAW_DATA_FILENAME: ${{ secrets.RAW_DATA_FILENAME }}
+          RAW_DATA_FOLDERNAME: ${{ secrets.RAW_DATA_FOLDERNAME }}
+          VECTORDB_COLLECTION_NAME: ${{ secrets.VECTORDB_COLLECTION_NAME }}
+          VECTORDB_PERSIST_FOLDERNAME: ${{ secrets.VECTORDB_PERSIST_FOLDERNAME }}
+          NUMBER_OF_SIMILARITY_RESULTS: ${{ secrets.NUMBER_OF_SIMILARITY_RESULTS }}
+          AI_IMAGES_SAVE_DIRECTORY: ${{ secrets.AI_IMAGES_SAVE_DIRECTORY }}
+          IMAGE_WIDTH: ${{ secrets.IMAGE_WIDTH }}
+          IMAGE_HEIGHT: ${{ secrets.IMAGE_HEIGHT }}
+          IMAGE_ENGINE: ${{ secrets.IMAGE_ENGINE }}
+          INSTAGRAM_USERNAME: ${{ secrets.INSTAGRAM_USERNAME }}
+          INSSTAGRAM_PASSWORD: ${{ secrets.INSTAGRAM_PASSWORD }}
+        run: python main.py instagram
+
+      - name: commit and push files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "Quotify.AI Github Action"
+          git add .
+          git commit -m "run daily instagram job, and updated images and database content"
+          git push

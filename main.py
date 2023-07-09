@@ -1,12 +1,25 @@
 import sys
 import ai
+import social_media
+import chromedriver_autoinstaller
 from config import *
 from social_media.instagram import InstagramPoster
 from ai.quote_llm import QuoteLLM
 from ai.quote_image import QuoteImageGenerator
+from pyvirtualdisplay import Display
+
+WINDOW_WIDTH = 1000
+WINDOW_HEIGHT = 1000
 
 
 def main(platform_name: str):
+
+    display = Display(visible=True, size=(
+        WINDOW_WIDTH, WINDOW_HEIGHT), backend='xvfb')
+    display.start()
+
+    chromedriver_autoinstaller.install()
+
     quote_selector, quote_categories = ai.get_quotes(data_folder=RAW_DATA_FOLDER_NAME,
                                                      data_filename=RAW_DATA_FILENAME,
                                                      collection_name=VECTORDB_COLLECTION_NAME,
@@ -41,7 +54,7 @@ def main(platform_name: str):
     poster = None
     if platform_name == 'instagram':
         poster = InstagramPoster(
-            INSTAGRAM_USERNAME, INSTAGRAM_PASSWORD, headless=True, no_sandbox=True)
+            INSTAGRAM_USERNAME, INSTAGRAM_PASSWORD, options=social_media.BEST_OPTIONS)
         poster.login()
         poster.post_content(image_destination, quote_llm.quote_result)
 

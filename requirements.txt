@@ -7,3 +7,5 @@ tiktoken
 sentence-transformers
 stability-sdk
 selenium
+chromedriver-autoinstaller
+pyvirtualdisplay

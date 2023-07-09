@@ -11,13 +11,7 @@ INSTAGRAM_LOGIN_URL = 'https://www.instagram.com/accounts/login/'
 
 
 class InstagramPoster(webdriver.Chrome):
-    def __init__(self, username: str, password: str, headless: bool = False, no_sandbox: bool = False):
-        options = ChromeOptions()
-        if headless:
-            options.add_argument('--headless')
-        if no_sandbox:
-            options.add_argument('--no-sandbox')
-
+    def __init__(self, username: str, password: str, options: ChromeOptions):
         super().__init__(options=options)
 
         self.username = username
