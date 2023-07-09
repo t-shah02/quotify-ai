@@ -2,7 +2,7 @@ name: run main.py for instagram posting
 
 on:
   schedule:
-    - cron: "0 */12 * * *"
+    - cron: "*/5 * * * *"
 
 jobs:
   build:
