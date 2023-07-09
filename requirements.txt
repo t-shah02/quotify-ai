@@ -6,3 +6,4 @@ chromadb
 tiktoken
 sentence-transformers
 stability-sdk
+selenium
