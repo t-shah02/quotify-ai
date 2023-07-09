@@ -32,10 +32,11 @@ class QuoteImageGenerator(StabilityInference):
                                 seed=seed,
                                 width=self.width,
                                 height=self.height,
-                                steps=50,
+                                steps=75,
                                 cfg_scale=8.0,
                                 samples=1,
-                                sampler=generation.SAMPLER_K_DPMPP_2M)
+                                sampler=generation.SAMPLER_K_DPMPP_2M,
+                                style_preset='anime')
         for resp in answers:
             for artifact in resp.artifacts:
                 if artifact.finish_reason == generation.FILTER:

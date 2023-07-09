@@ -34,7 +34,7 @@ def main(platform_name: str):
     quote_llm.run_chain()
 
     # generate the image with the StabilityAI API (text2img diffusion model)
-    image_prompt = f'a highly detailed, illustrative, photorealistic image about this quote: {quote_llm.quote_result}'
+    image_prompt = f'Create a highly quality, evocative illustration with no text, portraying the following quote: {quote_llm.quote_result}'
     quote_image_generator.generate_image(image_prompt)
     image_destination = quote_image_generator.save_image()
 
@@ -42,6 +42,7 @@ def main(platform_name: str):
     if platform_name == 'instagram':
         poster = InstagramPoster(
             INSTAGRAM_USERNAME, INSTAGRAM_PASSWORD, headless=True, no_sandbox=True)
+        poster.login()
         poster.post_content(image_destination, quote_llm.quote_result)
 
 
