@@ -15,6 +15,7 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
+          cache: "pip"
 
       - name: installing package list
         run: apt list --installed
@@ -47,7 +48,7 @@ jobs:
           IMAGE_HEIGHT: ${{ secrets.IMAGE_HEIGHT }}
           IMAGE_ENGINE: ${{ secrets.IMAGE_ENGINE }}
           INSTAGRAM_USERNAME: ${{ secrets.INSTAGRAM_USERNAME }}
-          INSSTAGRAM_PASSWORD: ${{ secrets.INSTAGRAM_PASSWORD }}
+          INSTAGRAM_PASSWORD: ${{ secrets.INSTAGRAM_PASSWORD }}
         run: python main.py instagram
 
       - name: commit and push files
